@@ -82,3 +82,11 @@
 
 
 @endsection
+
+@section('custom_js')
+<script>
+	setTimeout(() => {
+		$(".global-message").fadeOut();
+	}, 3000);
+</script>
+@endsection

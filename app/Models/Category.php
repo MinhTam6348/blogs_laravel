@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 
 use App\Models\User;
+use App\Models\Post;
 class Category extends Model
 {
     use HasFactory;
@@ -14,5 +15,9 @@ class Category extends Model
     protected $fillable = ['name','slug'];
     public function posts(){
         return $this->hasMany(Post::class);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 }
