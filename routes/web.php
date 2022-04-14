@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Controllers\AdminControllers\DashboardController;
+
+
+
+
+
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostsController;
@@ -20,9 +26,9 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TagController;
 
+
+//Front user routes 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
-
 
 Route::get('/posts/{post:slug}', [PostsController::class, 'show'])->name('posts.show');
 Route::post('/posts/{post:slug}', [PostsController::class, 'addComment'])->name('posts.add_comment');
@@ -38,3 +44,12 @@ Route::get('/categories', [CategoryController::class, 'index'])->name('categorie
 Route::get('/tags/{tag:name}', [TagController::class, 'show'])->name('tags.show');
 
 require __DIR__.'/auth.php';
+
+
+//Admin Dashboard routes
+
+Route::prefix('admin')->name('admin.')->middleware('auth', 'isadmin')->group(function() {
+    Route::get('/', [DashboardController::class, 'index'])->name('admin.index');
+
+});
+
