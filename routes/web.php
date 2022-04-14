@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 use App\Http\Controllers\AdminControllers\DashboardController;
+use App\Http\Controllers\AdminControllers\AdminPostsController;
+use App\Http\Controllers\AdminControllers\TinyMCEController;
 
 
 
@@ -51,5 +53,7 @@ require __DIR__.'/auth.php';
 Route::prefix('admin')->name('admin.')->middleware('auth', 'isadmin')->group(function() {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.index');
 
+    Route::resource('posts', AdminPostsController::class);
+    Route::post('upload_tinymce_image', [TinyMCEController::class, 'upload_tinymce_image'])->name('upload_tinymce_image');
 });
 
