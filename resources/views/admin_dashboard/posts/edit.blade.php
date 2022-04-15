@@ -29,31 +29,32 @@
           
             <div class="card">
               <div class="card-body p-4">
-                  <h5 class="card-title">Add New Post</h5>
+                  <h5 class="card-title">Edit Post: {{$post->title}}</h5>
                   <hr/>
-                    <form action="{{route('admin.posts.store')}}" method="POST" enctype='multipart/form-data'>
+                    <form action="{{route('admin.posts.update', $post)}}" method="POST" enctype='multipart/form-data'>
                       @csrf
+                      @method('PATCH')
                         <div class="form-body mt-4">
                             <div class="row">
                             <div class="col-lg-12">
                             <div class="border border-3 p-4 rounded">
                                     <div class="mb-3">
                                         <label for="inputProductTitle" class="form-label">Post Title</label>
-                                        <input type="text"  value='{{ old("title") }}' class="form-control" required name='title'  id="inputProductTitle" placeholder="Enter product title">
+                                        <input type="text"  value='{{ old("title", $post->title) }}' class="form-control" required name='title'  id="inputProductTitle" placeholder="Enter product title">
                                         @error('title')
                                                 <p class='text-danger'>{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label for="inputProductTitle" class="form-label">Post Slug</label>
-                                        <input type="text" value='{{ old("slug") }}' class="form-control" required  name='slug'  id="inputProductTitle" placeholder="Enter product title">
+                                        <input type="text" value='{{ old("slug", $post->slug) }}' class="form-control" required  name='slug'  id="inputProductTitle" placeholder="Enter product title">
                                         @error('slug')
                                                 <p class='text-danger'>{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label for="inputProductDescription" class="form-label">Post Excerpt</label>
-                                        <textarea required name='excerpt'  class="form-control" id="inputProductDescription" rows="3">{{ old("excerpt") }}</textarea>
+                                        <textarea required name='excerpt'  class="form-control" id="inputProductDescription" rows="3">{{ old("excerpt", $post->excerpt) }}</textarea>
                                         @error('excerpt')
                                                 <p class='text-danger'>{{ $message }}</p>
                                         @enderror
@@ -65,7 +66,7 @@
                                             <div class="card-body">
                                                 <select required name='category_id'  class="single-select">
                                                 @foreach($categories as $key => $category) 
-                                                    <option value="{{ $key }}">{{$category}}</option>
+                                                    <option {{ $post->category_id === $key ? 'selected' : ''}} value="{{$key}}">{{$category}}</option>
                                                 @endforeach
                                                 </select>
 
@@ -82,22 +83,39 @@
                                     </div> -->
 
                                     <div class="mb-3">
-                                        <label for="inputProductDescription" class="form-label">Post Thumbnail</label>
-                                        <input id="thumbnail" required name='thumbnail' id="file" type="file" multiple>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <label for="inputProductDescription" class="form-label">Post Thumbnail</label>
+                                                <input id="thumbnail"  name='thumbnail' id="file" type="file" multiple>
 
-                                        @error('thumbnail')
-                                            <p class='text-danger'>{{ $message }}</p>
-                                        @enderror
+                                                @error('thumbnail')
+                                                    <p class='text-danger'>{{ $message }}</p>
+                                                @enderror
+                                            </div>
+
+                                            <div class="col-md-4 text-center">
+                                                <img style="width: 100%" src="/storage/{{$post ->image ? $post ->image->path : 'placeholders/thumbnail_placeholder.svg'}}" class="img-responsive" alt="Post thumbnail">
+                                            </div>
+                                        </div>
+                                       
                                     </div>
                                     <div class="mb-3">
                                         <label for="inputProductDescription" class="form-label">Post Content</label>
-                                        <textarea  name='body' id="post_content" class="form-control" id="inputProductDescription" rows="3">{{ old("body") }}</textarea>
+                                        <textarea  name='body' id="post_content" class="form-control" id="inputProductDescription" rows="3">
+                                            {{ old("body", str_replace('../../../', '/', $post->body)) }}
+                                        </textarea>
 
                                         @error('body')
                                             <p class='text-danger'>{{ $message }}</p>
                                         @enderror
                                     </div>
-                                    <button class='btn btn-primary' type='submit'>Add Post</button>
+                                    <button class='btn btn-primary' type='submit'>Update Post</button>
+
+                                    <form action="{{ route('admin.posts.destroy', $post) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class='btn btn-danger' type='submit'>Delete Post</button>
+                                    </form>
                             </div>
                         </div><!--end row-->
                     </form>
@@ -112,6 +130,7 @@
     @endsection
 
 @section("script")
+<script src="{{ asset('admin_dashboard_assets/plugins/Drag-And-Drop/dist/imageuploadify.min.js') }}"></script>
 <script src="{{ asset('admin_dashboard_assets/plugins/select2/js/select2.min.js') }}"></script>
 <script>
     $(document).ready(function () {
