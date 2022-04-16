@@ -51,14 +51,15 @@
                                     <button class='btn btn-primary' type='submit'>Update Category</button>
                                     <a 
                                     class='btn btn-danger'
-                                    onclick="event.preventDefault();document.getElementById('delete_category_{{$category->id}}').submit()"
-                                    hrel="#">Delete Category</a>                                    
+                                    onclick="event.preventDefault();document.getElementById('delete_category_{{ $category->id }}').submit()"
+                                    hrel="#">Delete Category</a> 
+
                                 </div>
                             </div>  
                         </div><!--end row-->
                         </div>  
                     </form>
-                    <form id="delete_category_{{$category->id}}" action="{{ route('admin.categories.destroy', $category) }}">
+                    <form id="delete_category_{{ $category->id }}" method='post' action="{{ route('admin.categories.destroy', $category) }}">
                         @csrf
                         @method('DELETE')
                     </form>

@@ -2,6 +2,13 @@
 
 @section('title', $post->title . ' | MyBlog')
 
+@section('custom_css')
+<style>
+	.class-single .desc img{
+		width:100%;
+	}
+</style>
+@endsection
 @section('content')
 
 
