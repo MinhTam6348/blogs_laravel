@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminControllers\DashboardController;
 use App\Http\Controllers\AdminControllers\AdminPostsController;
 use App\Http\Controllers\AdminControllers\TinyMCEController;
+use App\Http\Controllers\AdminControllers\AdminCategoriesController;
 
 
 
@@ -50,10 +51,11 @@ require __DIR__.'/auth.php';
 
 //Admin Dashboard routes
 
-Route::prefix('admin')->name('admin.')->middleware('auth', 'isadmin')->group(function() {
-    Route::get('/', [DashboardController::class, 'index'])->name('admin.index');
-
-    Route::resource('posts', AdminPostsController::class);
+Route::name('admin.')->prefix('admin')->middleware('auth', 'isadmin')->group(function() {
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
     Route::post('upload_tinymce_image', [TinyMCEController::class, 'upload_tinymce_image'])->name('upload_tinymce_image');
+    
+    Route::resource('posts', AdminPostsController::class);
+    Route::resource('categories', AdminCategoriesController::class);
 });
 

@@ -2,6 +2,7 @@
 @extends("admin_dashboard.layouts.app")
 
 @section("style")
+
 <link href="{{ asset('admin_dashboard_assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
 <link href="{{ asset('admin_dashboard_assets/plugins/select2/css/select2-bootstrap4.css') }}" rel="stylesheet" />
 <script src="https://cdn.tiny.cloud/1/zccmr4xtp3vtxapfh5vo6rp0om9phnldiw8yyrzn47iic6od/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
@@ -18,7 +19,7 @@
                 <div class="ps-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 p-0">
-                            <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"><i class="bx bx-home-alt"></i></a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">Posts</li>
                         </ol>
