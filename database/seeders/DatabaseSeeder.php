@@ -73,5 +73,7 @@ class DatabaseSeeder extends Seeder
             $post->tags()->sync($tag_ids );
             $post->image()->save(\App\Models\Image::factory()->make());
         }
+
+        \App\Models\Setting::factory(1)->create();
     }
 }

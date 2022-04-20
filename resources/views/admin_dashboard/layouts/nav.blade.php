@@ -108,6 +108,19 @@
                     </ul>
                 </li>
 
+                <li>
+                    <a href="{{ route('admin.contacts') }}" target="_blank">
+                    <div class="parent-icon"><i class='bx bx-mail-send'></i></div>
+                        <div class="menu-title">Contacts</div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.setting.edit') }}" target="_blank">
+                    <div class="parent-icon"><i class='bx bx-bulb'></i></div>
+                        <div class="menu-title">Setting</div>
+                    </a>
+                </li>
             </ul>
             <!--end navigation-->
         </div>

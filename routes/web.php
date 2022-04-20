@@ -20,8 +20,8 @@ use App\Http\Controllers\AdminControllers\AdminTagsController;
 use App\Http\Controllers\AdminControllers\AdminCommentsController;
 use App\Http\Controllers\AdminControllers\AdminRolesController;
 use App\Http\Controllers\AdminControllers\AdminUsersController;
-
-
+use App\Http\Controllers\AdminControllers\AdminContactsController;
+use App\Http\Controllers\AdminControllers\AdminSettingController;
 
 
 use App\Http\Controllers\HomeController;
@@ -67,5 +67,13 @@ Route::name('admin.')->prefix('admin')->middleware(['auth', 'isadmin','check_per
     Route::resource('roles', AdminRolesController::class)->except('show');
 
     Route::resource('users', AdminUsersController::class);
+
+    Route::get('contacts', [AdminContactsController::class,'index'])->name('contacts');
+
+    Route::delete('contacts/{contact}', [AdminContactsController::class,'destroy'])->name('contacts.destroy');
+
+    Route::get('about', [AdminSettingController::class,'edit'])->name('setting.edit');
+
+    Route::post('about', [AdminSettingController::class,'update'])->name('setting.update');
 });
 
